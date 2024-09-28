@@ -1,0 +1,13 @@
+---
+version: "3.7"
+
+services:
+    hackaton:
+        container_name: toc
+        ports:
+            - 5000:5000
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        restart: always
+...
