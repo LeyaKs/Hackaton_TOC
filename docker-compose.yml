@@ -1,9 +1,9 @@
 ---
-version: "3.7"
 
 services:
     hackaton:
         container_name: toc
+        network_mode: "host"
         ports:
             - 5000:5000
         build:
