@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, render_template
 import os
 import generator, str_find
 
@@ -19,16 +19,8 @@ def upload_file():
             generator.generate(str_find.analyze_font_sizes(input_file_path), input_file_path, output_file_path)
             return send_file(output_file_path, as_attachment=True)
         return 'Неверный тип файла'
-    return '''
-    <!doctype html>
-    <title>Загрузка файла</title>
-    <h1>Загрузите файл</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Загрузить>
-    </form>
-    '''
-
+    return render_template('index.html')
+   
 def init_dir(filename):
     if not os.path.exists(filename):
         os.makedirs(filename)
