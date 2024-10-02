@@ -45,7 +45,7 @@ def generate(dictionary: dict, input_filename: str, output_filename: str) -> Non
             g_drawer_y = 30
         textbox = __gen_rect(dictionary[header][0], header)
         toc_page.insert_textbox(textbox, header, fontsize=g_fontsize, fontname="page_font", encoding=pymupdf.TEXT_ENCODING_CYRILLIC)
-        link = toc_page.insert_link({"kind": pymupdf.LINK_GOTO, "page": dictionary[header][1] + toc_page_number, "from": textbox, "to": pymupdf.Point(1, 1)})
+        link = toc_page.insert_link({"kind": pymupdf.LINK_GOTO, "page": dictionary[header][1] + toc_page_number - 1, "from": textbox, "to": pymupdf.Point(1, 1)})
     doc.save(output_filename)
 
 def find_and_generate(dictionary: dict, input_filename: str, output_filename: str = "res.pdf", toc_starting_page : int = 0) -> None:
