@@ -2,7 +2,7 @@ from pymupdf import *
 
 def analyze_font_sizes(pdf_path):
     size_s = list()          #Множество кеглей
-    doc = open("test.pdf")
+    doc = open(pdf_path)
     counter = 1
     result = dict()
 

@@ -51,7 +51,8 @@ def find_and_generate(dictionary: dict, input_filename: str, output_filename: st
             for key in dictionary:
                 if key in block[4]:
                     rect = pymupdf.Rect(block[0], block[1], block[2], block[3])
-                    page.insert_link({"kind": pymupdf.LINK_GOTO, "page": int(dictionary[key][1]), "from": rect, "to": pymupdf.Point(1, 1)})
+                    link_info : dict = {"kind": pymupdf.LINK_GOTO, "page": int(dictionary[key][1]), "from": rect, "to": pymupdf.Point(1, 1)}
+                    page.insert_link(link_info)
     doc.save(output_filename)
 
 def main():
