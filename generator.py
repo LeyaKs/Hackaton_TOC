@@ -42,6 +42,8 @@ def generate(dictionary: dict, input_filename: str, output_filename: str) -> Non
         if(g_drawer_y >= g_page_height):
             toc_page_number += 1
             toc_page : pymupdf.Page = doc.new_page(toc_page_number, width = g_page_width, height = g_page_height)
+            font=pymupdf.Font(g_font)
+            toc_page.insert_font(fontname="page_font", fontbuffer=font.buffer)
             g_drawer_y = 30
         textbox = __gen_rect(dictionary[header][0], header)
         toc_page.insert_textbox(textbox, header, fontsize=g_fontsize, fontname="page_font", encoding=pymupdf.TEXT_ENCODING_CYRILLIC)
