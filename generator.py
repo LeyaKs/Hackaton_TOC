@@ -1,7 +1,7 @@
 import pymupdf
 import math
 
-g_font : str = "times-roman"
+g_font : str = "tiro"
 g_fontsize : int = 11
 
 g_line_spacing : float = 10
@@ -31,14 +31,15 @@ def generate(dictionary: dict, input_filename: str, output_filename: str) -> Non
     doc = pymupdf.open(input_filename)
     toc_page_number : int = 0
     toc_page : pymupdf.Page = doc.new_page(toc_page_number, width = g_page_width, height = g_page_height)
-    toc_page.insert_font(g_font)
+    font=pymupdf.Font(g_font)
+    toc_page.insert_font(fontname="page_font", fontbuffer=font.buffer)
     for header in dictionary:
         if(g_drawer_y >= g_page_height):
             toc_page_number += 1
             toc_page : pymupdf.Page = doc.new_page(toc_page_number, width = g_page_width, height = g_page_height)
             g_drawer_y = 30
         textbox = __gen_rect(dictionary[header][0], header)
-        toc_page.insert_textbox(textbox, header, fontsize=g_fontsize, fontname=g_font, encoding=pymupdf.TEXT_ENCODING_CYRILLIC)
+        toc_page.insert_textbox(textbox, header, fontsize=g_fontsize, fontname="page_font", encoding=pymupdf.TEXT_ENCODING_CYRILLIC)
         link = toc_page.insert_link({"kind": pymupdf.LINK_GOTO, "page": dictionary[header][1] + toc_page_number, "from": textbox, "to": pymupdf.Point(1, 1)})
     doc.save(output_filename)
 
@@ -54,9 +55,3 @@ def find_and_generate(dictionary: dict, input_filename: str, output_filename: st
                     link_info : dict = {"kind": pymupdf.LINK_GOTO, "page": int(dictionary[key][1]), "from": rect, "to": pymupdf.Point(1, 1)}
                     page.insert_link(link_info)
     doc.save(output_filename)
-
-def main():
-    find_and_generate({}, "Отчет эмитента 6 месяцев 2023.pdf", "res.pdf", 0)
-
-if __name__ == "__main__":
-    main()
