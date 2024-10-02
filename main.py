@@ -1,5 +1,6 @@
 from flask import Flask, request, send_file, render_template
 import os
+import pymupdf
 import generator, str_find, content
 
 # HDRS = 'HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\n\r\n'
@@ -16,7 +17,7 @@ def upload_file():
             input_file_path = os.path.join('uploads', file.filename)
             output_file_path = os.path.join('uploads', 'res.pdf')
             file.save(input_file_path)
-            already_existing_toc : dict = content.content_take(input_file_path)
+            already_existing_toc : dict = content.content_take(pymupdf.open(input_file_path))
             if(already_existing_toc):
                 generator.find_and_generate(already_existing_toc, input_file_path, output_file_path)
             else:
