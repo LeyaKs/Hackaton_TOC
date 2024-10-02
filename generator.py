@@ -29,10 +29,15 @@ def __indent(rank: int) -> float:
 def generate(dictionary: dict, input_filename: str, output_filename: str) -> None:
     global g_drawer_y
     doc = pymupdf.open(input_filename)
-    toc_page_number : int = 0
+    toc_page_number : int = 1
     toc_page : pymupdf.Page = doc.new_page(toc_page_number, width = g_page_width, height = g_page_height)
     font=pymupdf.Font(g_font)
     toc_page.insert_font(fontname="page_font", fontbuffer=font.buffer)
+    toc_header = "Оглавление"
+    text_len = pymupdf.get_text_length(toc_header, g_font, g_fontsize * 2)
+    textbox = pymupdf.Rect(g_page_width / 2 - text_len * 2, g_drawer_y, g_page_width, g_drawer_y + g_fontsize * 8)
+    g_drawer_y += g_fontsize * 4
+    toc_page.insert_textbox(textbox, toc_header, fontsize=g_fontsize * 2, fontname="page_font")
     for header in dictionary:
         if(g_drawer_y >= g_page_height):
             toc_page_number += 1
