@@ -6,9 +6,6 @@ def analyze_font_sizes(pdf_path):
     counter_pages = 1             #Счетчик страниц
     counter = 1
     result = dict()         #Итоговый словарь
-# [{'size': 9.0, 'flags': 16, 'font': 'Arial,Bold', 'color': 0, 'ascender': 0.9052734375, 'descender': -0.2119140625, 'text': '1.ОБЩИЕ ПОЛОЖЕНИЯ. ', 'origin': (70.94400024414062, 76.79998779296875), 'bbox': (70.94400024414062, 67.16999053955078, 181.08200073242188, 79.56298828125)}], 'wmode': 0, 'dir':
-
-
     for page in doc:
         text = page.get_text("dict")        #Получение текста в виде словарей
         blocks = text["blocks"]             #Разбиение его на блоки
@@ -54,6 +51,3 @@ def analyze_font_sizes(pdf_path):
                 counter += 1
         counter_pages += 1
     return result
-
-pdf_path = "test2.pdf"
-print(analyze_font_sizes(pdf_path))
