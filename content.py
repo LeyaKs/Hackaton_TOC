@@ -1,7 +1,5 @@
 import pymupdf
 
-
-
 #FILE_NAME = "testik.pdf"
 SPECIAL_SYMBOL = "\\\\\\"
 CONTENT_NAME = ["оглавление", "Оглавление", "ОГЛАВЛЕНИЕ", \
@@ -53,7 +51,7 @@ def text_process(text):
 
 
 def word_check(word):
-    alphabet_eng = 'AaBbСсDdEeFfGgHhIiJjKkLlMmNnОоРрQqRrSsTtUuVvWwXxYyZz'
+    alphabet_eng = 'AaBbСсDdEeFfGgHhIiJjKkLlMmNnОоРрQqRrSsTtUuVvWwXxYyZz—-+=*/\|!@#$%^&*()"№%:?*":[]«»'
     alphabet_eng_len = len(alphabet_eng)
     alphabet_rus = "аАеЕёЁиИоОуУыЫэЭюЮяЧбБвВгГдДжЖзЗйЙкКлЛмМнНпПрРсСтТфФхХцЦчЧшШщЩ"
     alphabet_rus_len = len(alphabet_rus)
