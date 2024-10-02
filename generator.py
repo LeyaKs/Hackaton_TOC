@@ -1,14 +1,14 @@
 import pymupdf
 import math
 
-g_font = "times-roman"
-g_fontsize = 11
+g_font : str = "times-roman"
+g_fontsize : int = 11
 
-g_line_spacing = 10
-g_indent = 30
+g_line_spacing : float = 10
+g_indent : float = 30
 
-g_page_width = 595
-g_page_height = 842
+g_page_width : float = 595
+g_page_height : float = 842
 
 g_drawer_y : float = 30
 
@@ -26,7 +26,7 @@ def __indent(rank: int) -> float:
     atan_res = math.atan((rank - 1) / 5) / math.pi
     return g_indent + atan_res * g_page_width
 
-def generate(dictionary: dict, input_filename: str, output_filename: str):
+def generate(dictionary: dict, input_filename: str, output_filename: str) -> None:
     global g_drawer_y
     doc = pymupdf.open(input_filename)
     toc_page_number : int = 0
@@ -42,12 +42,21 @@ def generate(dictionary: dict, input_filename: str, output_filename: str):
         link = toc_page.insert_link({"kind": pymupdf.LINK_GOTO, "page": dictionary[header][1] + toc_page_number, "from": textbox, "to": pymupdf.Point(1, 1)})
     doc.save(output_filename)
 
+def find_and_generate(dictionary: dict, input_filename: str, output_filename: str = "res.pdf", toc_starting_page : int = 0) -> None:
+    doc = pymupdf.open(input_filename)
+    for i in range(toc_starting_page, len(doc)):
+        page = doc[i]
+        blocks = page.get_text("blocks")
+        print(blocks)
+        for block in blocks:
+            for key in dictionary:
+                if key in block[4]:
+                    rect = pymupdf.Rect(block[0], block[1], block[2], block[3])
+                    page.insert_link({"kind": pymupdf.LINK_GOTO, "page": dictionary[key][1], "from": rect, "to": pymupdf.Point(1, 1)})
+    doc.save(output_filename)
 
 def main():
-    dictionary = {}
-    for i in range(1, 100):
-        dictionary["Chapter" * i + str(i)] = (i, 1)
-    generate(dictionary, "test.pdf", "res.pdf")
+    find_and_generate({}, "Отчет эмитента 6 месяцев 2023.pdf", "res.pdf", 0)
 
 if __name__ == "__main__":
     main()
