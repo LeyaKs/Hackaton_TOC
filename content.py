@@ -117,7 +117,3 @@ def content_take(doc):
     print(content)
     
     return content
-
-
-
-content_take(pymupdf.open(FILE_NAME))
