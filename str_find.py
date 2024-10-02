@@ -25,7 +25,6 @@ def analyze_font_sizes(pdf_path):
                 for i in range(0, len(size_s[counter-1])):
                     fonts_set.add(size_s[counter-1][i][1][0])
                 cnt_size_s = len(fonts_set)
-                
                 if cnt_size_s == 1:
                     for i in range(0, len(size_s[counter-1])):
                         if size_s[counter-1][i][1][1] == True:
@@ -46,7 +45,6 @@ def analyze_font_sizes(pdf_path):
                         if (size_s[counter-1][i][1][0] == max_size_2):
                             result[size_s[counter-1][i][0]] = (2, counter_pages)
                 if not result:
-                    
                     for i in range(0, len(size_s[counter-1])):
                         if size_s[counter-1][i][1][1] == True:
                             result[size_s[counter-1][i][0]] = (1, counter_pages)
