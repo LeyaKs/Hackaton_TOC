@@ -2,10 +2,10 @@ import pymupdf
 
 
 
-FILE_NAME = "Отчет эмитента 6 месяцев 2023.pdf"
+#FILE_NAME = "testik.pdf"
 SPECIAL_SYMBOL = "\\\\\\"
 CONTENT_NAME = ["оглавление", "Оглавление", "ОГЛАВЛЕНИЕ", \
-                "содержание", "Содержание", "СОДЕРЖАНИЕ", \
+                "Содержание", "СОДЕРЖАНИЕ", \
                 "content", "Content", "CONTENT"]
 content_page = -1
 count_page = -1
@@ -78,7 +78,7 @@ def content_make(text):
             else:
                 level = 1
             continue
-        if word_check(text[i]):
+        if word_check(text[i]) or 'год' in text[i + 1] or 'year' in text[i + 1]:
             if string != '':
                 string += ' '
             string += text[i]
