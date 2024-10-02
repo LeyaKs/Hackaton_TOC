@@ -40,6 +40,3 @@ def analyze_font_sizes(pdf_path):
                         result[size_s[counter-1][i][1]] = (2,counter)
         counter += 1
     return result
-
-pdf_path = "test.pdf"
-print(analyze_font_sizes(pdf_path))

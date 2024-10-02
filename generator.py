@@ -47,7 +47,6 @@ def find_and_generate(dictionary: dict, input_filename: str, output_filename: st
     for i in range(toc_starting_page, len(doc)):
         page = doc[i]
         blocks = page.get_text("blocks")
-        print(blocks)
         for block in blocks:
             for key in dictionary:
                 if key in block[4]:

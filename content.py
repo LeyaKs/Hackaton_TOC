@@ -24,7 +24,6 @@ def content_check(doc):
     for i in range(count_page):
         page = doc.load_page(i)
         text = page.get_text("text")
-        print(text)
         if content_name_check(text):
             content_page = i + 1
             return text
@@ -99,21 +98,17 @@ def content_take(doc):
     global content_page
     global count_page
     count_page = doc.page_count
-    print("!!!!!!!!!" + str(count_page))
     FIRST_CHAPTER = SPECIAL_SYMBOL
     content = {}
     text = content_check(doc)
     if text == None:
         return content
     for i in range(content_page, count_page):
-        print(text)
         if g_string in text:
             break
         text = text_process(text)
         content = {**content, **content_make(text)}
         page = doc.load_page(i)
         text = page.get_text("text")
-    print(text)
-    print(content)
     
     return content
