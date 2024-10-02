@@ -76,7 +76,7 @@ def content_make(text):
             else:
                 level = 1
             continue
-        if word_check(text[i]) or 'год' in text[i + 1] or 'year' in text[i + 1]:
+        if word_check(text[i]) or (i + 1 < len(text) and ('год' in text[i + 1] or 'year' in text[i + 1])):
             if string != '':
                 string += ' '
             string += text[i]
