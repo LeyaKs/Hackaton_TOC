@@ -1,28 +1,42 @@
-import os
-from pdfminer.high_level import extract_pages
-from pdfminer.layout import LTTextContainer, LTChar
+from pymupdf import *
 
 def analyze_font_sizes(pdf_path):
-    size_s = set()                         # Множество размеров шрифтов
-    for page in extract_pages(pdf_path):
-        for element in page:
-            for line in element:
-                if isinstance(line, LTTextContainer):   #Проверка на строку
-                    for char in line:
-                        size_s.add(int(round(char.size)))    #Добавление шрифта в список
-                        break
-    size_sorted = sorted(size_s, reverse=True) 
-    str_type = {}                       #Готовый словарь
-    page_number = 1
-    for page in extract_pages(pdf_path):
-        for element in page:
-            for line in element:
-                if isinstance(line, LTTextContainer):   #Проверка на строку
-                    for char in line:
-                        if (int(round(char.size)) == size_sorted[0]):
-                            str_type[line.get_text()] = (1, page_number)
-                        if (int(round(char.size)) == size_sorted[1]):
-                            str_type[line.get_text()] = (2, page_number)
-                        break
-        page_number += 1
-    return str_type
+    size_s = list()          #Множество кеглей
+    doc = open(pdf_path)
+    counter = 1
+    result = dict()
+
+    for page in doc:
+        text = page.get_text("dict")
+        blocks = text["blocks"]
+        page_lines = dict() 
+        for blocks_index in range(0, len(blocks)):
+            #print(blocks[blocks_index])
+            if(blocks[blocks_index]["type"] == 0):
+                for line in blocks[blocks_index]["lines"]:
+                    spans = line["spans"][0]
+                    line_text = spans["text"]
+                    line_text_len = len(line_text)
+                    if(line_text_len < 60 and line_text_len > 3):
+                        page_lines[int(round(spans['size']))] = line_text
+        if (page_lines):
+            sort_fonts = sorted(page_lines.items(), key = lambda item: item[0], reverse = True)
+            size_s.append(sort_fonts)
+            cnt_size_s = len(size_s[counter-1])
+            if cnt_size_s == 1:
+                continue
+            if cnt_size_s == 2:
+                max_size = sort_fonts[0][0]
+                for i in range(0, len(size_s[counter-1])):
+                    if (size_s[counter-1][i][0] == max_size):
+                        result[size_s[counter-1][i][1]] = (1,counter)
+            if cnt_size_s == 3:
+                max_size_1 = sort_fonts[0][0]
+                max_size_2 = sort_fonts[1][0]
+                for i in range(0, len(size_s[counter-1])):
+                    if (size_s[counter-1][i][0] == max_size_1):
+                        result[size_s[counter-1][i][1]] = (1,counter)
+                    if (size_s[counter-1][i][0] == max_size_2):
+                        result[size_s[counter-1][i][1]] = (2,counter)
+        counter += 1
+    return result
