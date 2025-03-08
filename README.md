@@ -14,7 +14,7 @@ templates ----- папка, в которой находится index.html, fro
 
 ### Два варианта проверки
 #### Ссылка на сайт
-https://hackaton-toc-1.onrender.com
+https://hackaton-toc.onrender.com
 
 #### Запуск
 Чтобы запустить данный проект, нужно иметь установленный Docker и Docker-compose.
